@@ -1,5 +1,5 @@
 import createFastify from "fastify";
-import { vi, describe, test, expect, afterEach, beforeEach } from "vitest";
+import { vi, describe, test, expect, afterEach } from "vitest";
 import jaegerClient from "jaeger-client";
 
 describe("jaegerPlugin", () => {

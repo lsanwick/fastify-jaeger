@@ -1,6 +1,5 @@
 "use strict";
 
-const assert = require("assert");
 const fp = require("fastify-plugin");
 const { initTracer, opentracing } = require("jaeger-client");
 const url = require("url");

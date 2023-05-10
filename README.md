@@ -1,14 +1,14 @@
 # fastify-jaeger
 
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)
-[![Lint, Test](https://github.com/maumercado/fastify-jaeger/workflows/Lint,%20Test/badge.svg?branch=master)](https://github.com/maumercado/fastify-jaeger/actions?query=workflow%3A%22Lint%2C+Test%22)
+[![Lint, Test](https://github.com/lsanwick/fastify-jaeger/workflows/Lint,%20Test/badge.svg?branch=master)](https://github.com/lsanwick/fastify-jaeger/actions?query=workflow%3A%22Lint%2C+Test%22)
 
 Fastify plugin for Jaeger distributed tracing system.
 
 ## Install
 
 ```sh
-npm install fastify-jaeger
+npm install lsanwick/fastify-jaeger#master
 ```
 
 ## Usage
@@ -25,17 +25,20 @@ This plugins supports all options and configurations of [jaeger-client-node's `i
 It uses the logger set to the fastify instance as the tracer logger.
 
 ```js
-const fastify = require("fastify")();
+import fastify from "fastify";
+import jaegerPlugin from "fastify-jaeger";
 
-fastify.register(require("fastify-jaeger"), {
+const app = fastify();
+
+app.register(jaegerPlugin, {
   serviceName: "my-service-name",
 });
 
-fastify.get("/", (req, reply) => {
+app.get("/", (req, reply) => {
   reply.send({ hello: "world" });
 });
 
-fastify.listen(3000, (err) => {
+app.listen(3000, (err) => {
   if (err) throw err;
   console.log("Server listening on localhost:", fastify.server.address().port);
 });

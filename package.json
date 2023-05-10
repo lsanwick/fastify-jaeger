@@ -1,14 +1,15 @@
 {
-  "name": "fastify-jaeger",
-  "version": "1.0.2",
+  "name": "fastify-plugin-jaeger",
+  "version": "0.1.0",
   "description": "Fastify plugin for Jaeger distributed tracing system",
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
     "jaeger": "docker container run -d -p 6831:6831/udp -p 6832:6832/udp -p 16686:16686 jaegertracing/all-in-one:1.37",
-    "test": "tap **/*.test.js",
-    "lint": "standard | snazzy",
-    "fix": "standard --fix"
+    "test": "vitest",
+    "lint": "eslint .",
+    "fix": "eslint --fix .",
+    "prepare": "husky install"
   },
   "files": [
     "test",
@@ -19,7 +20,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/maumercado/fastify-jaeger.git"
+    "url": "git+https://github.com/lsanwick/fastify-jaeger.git"
   },
   "keywords": [
     "tracing",
@@ -29,25 +30,35 @@
     "distributed",
     "timing"
   ],
-  "author": "Mauricio Mercado - @maumercado (https://codigo.sh)",
-  "license": "ISC",
+  "author": "Luke Sanwick",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/maumercado/fastify-jaeger/issues"
+    "url": "https://github.com/lasnwick/fastify-jaeger/issues"
   },
-  "homepage": "https://github.com/maumercado/fastify-jaeger#readme",
+  "homepage": "https://github.com/lsanwick/fastify-jaeger#readme",
   "devDependencies": {
     "@types/jaeger-client": "^3.17.2",
-    "@types/node": "^15.3.0",
+    "@types/node": "^16",
     "@vitest/coverage-c8": "^0.31.0",
+    "eslint": "^8.40.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.7.0",
+    "eslint-plugin-promise": "^6.1.1",
     "fastify": "^4.17.0",
-    "snazzy": "^8.0.0",
-    "standard": "^14.3.3",
-    "tap": "^16.3.4",
-    "typescript": "^3.9.9",
+    "husky": ">=6",
+    "lint-staged": ">=10",
+    "prettier": "2.8.8",
+    "typescript": "^5",
     "vitest": "^0.31.0"
   },
   "dependencies": {
     "fastify-plugin": "^4.5.0",
     "jaeger-client": "^3.17.2"
+  },
+  "lint-staged": {
+    "*.{js,css,md}": "prettier --write",
+    "*.{js,ts}": "eslint --fix"
   }
 }
