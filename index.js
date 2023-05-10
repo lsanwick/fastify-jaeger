@@ -27,14 +27,10 @@ module.exports = fp(
       logger: fastify.log,
     };
 
-    let tracer = null;
-
-    const init = () => {
-      tracer = initTracer(
-        { ...defaultConfig, ...tracerConfig },
-        { ...defaultOptions, ...initTracerOpts }
-      );
-    };
+    const tracer = initTracer(
+      { ...defaultConfig, ...tracerConfig },
+      { ...defaultOptions, ...initTracerOpts }
+    );
 
     const tracerMap = new WeakMap();
 
@@ -69,7 +65,6 @@ module.exports = fp(
     }
 
     fastify.addHook("onRequest", (req, res, done) => {
-      init();
       const parentSpanContext = tracer.extract(
         FORMAT_HTTP_HEADERS,
         setContext(req.raw.headers)
