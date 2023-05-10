@@ -5,6 +5,10 @@ import { TracingOptions, TracingConfig, JaegerTracer } from "jaeger-client";
 export interface FastifyJaegerPluginOptions extends TracingConfig {
   serviceName?: string;
   /**
+   * If `true`, will attempt to initialize Jaeger with `initTracerFromEnv` instead of `initTracer`.
+   */
+  useEnv?: boolean;
+  /**
    * If `true`, will decorate the `fastify` request with a `jaeger` object.
    *
    * ### Example

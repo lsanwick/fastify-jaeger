@@ -1,7 +1,7 @@
 "use strict";
 
 const fp = require("fastify-plugin");
-const { initTracer, opentracing } = require("jaeger-client");
+const { initTracer, initTracerFromEnv, opentracing } = require("jaeger-client");
 const url = require("url");
 
 const { Tags, FORMAT_HTTP_HEADERS } = opentracing;
@@ -11,7 +11,12 @@ module.exports = fp(
     if (!opts.serviceName) {
       throw new Error("Jaeger Plugin requires serviceName option");
     }
-    const { state = {}, initTracerOpts = {}, ...tracerConfig } = opts;
+    const {
+      state = {},
+      initTracerOpts = {},
+      useEnv = false,
+      ...tracerConfig
+    } = opts;
     const exposeAPI = opts.exposeAPI !== false;
     const defaultConfig = {
       sampler: {
@@ -27,7 +32,8 @@ module.exports = fp(
       logger: fastify.log,
     };
 
-    const tracer = initTracer(
+    const initJaeger = useEnv ? initTracerFromEnv : initTracer;
+    const tracer = initJaeger(
       { ...defaultConfig, ...tracerConfig },
       { ...defaultOptions, ...initTracerOpts }
     );
